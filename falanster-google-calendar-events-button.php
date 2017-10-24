@@ -35,7 +35,7 @@ add_action('save_post', 'falanster_event_save');
  }  
 function falanster_events_create_page_post(){
     // Создаем поле для определения мероприятия на странице добавления/редактирования страницы))
-    add_meta_box('falanster_events_section','Добавление falanster-мероприятия','falanster_events_section', 'page','side');
+    add_meta_box('falanster_events_section','Добавление falanster-мероприятия','falanster_events_section', 'post','side');
 }
 
 
@@ -160,9 +160,9 @@ function falanster_event_save($postId){
     $start_date = explode('/',$_POST['start_date'])  ;
     $end_date = explode('/',$_POST['end_date']);
     $link = '<a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text='.
-    $title.'&dates='.$start_date[2].$start_date[0].$start_date[1].'T'.
+    $title.'&dates='.$start_date[2].$start_date[1].$start_date[0].'T'.
     $_POST['start_time'].'/'.
-    $end_date[2].$end_date[0].$end_date[1].'T'.
+    $end_date[2].$end_date[1].$end_date[0].'T'.
     $_POST['end_time'].'&details&location&trp=false&sprop=website:http://localhost&ctz=Europe/Helsinki&sf=true&output=xml#eventpage_6"><img border="0" src="https://www.google.com/calendar/images/ext/gc_button1_ru.gif"></a>';
     // запись метаданных
     update_post_meta($postId, '_falanster_event',$link); 
