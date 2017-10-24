@@ -9,7 +9,7 @@ var A_TCALCONF = {
 	'weekdays'   : ['Вс','Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
 	'longwdays'  : ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
 	'yearscroll' : true, // show year scroller
-	'weekstart'  : 0, // first day of week: 0-Su or 1-Mo
+	'weekstart'  : 1, // first day of week: 0-Su or 1-Mo
 	'prevyear'   : 'Предыдущий год',
 	'nextyear'   : 'Следующий год',
 	'prevmonth'  : 'Предыдущий месяц',

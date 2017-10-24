@@ -48,6 +48,8 @@ function falanster_events_section($post,$box) {
   $old_start_time = get_post_meta($post->ID,'_start_time', true);
   $old_end_time = get_post_meta($post->ID,'_end_time', true);
   $old_title_event = get_post_meta($post->ID,'_title_event', true);
+  $old_location_event = get_post_meta($post->ID,'_location_event', true);
+  $old_description_event = get_post_meta($post->ID,'_description_event', true);
   $watches = [ 
         ['000000' ,'00:00'],
         ['003000' ,'00:30'],
@@ -135,6 +137,17 @@ function falanster_events_section($post,$box) {
     }
     
     echo'</select>';
+    
+    echo '
+      <p><strong>Место: </strong><p>  
+     
+    <input type="text" placeholder="Место" name="location_event" value="'.$old_location_event.'"/>
+    
+    <p><strong>Описание:</strong><p>  
+     
+    <input type="text" placeholder="Описание" name="description_event" value="'.$old_description_event.'"/>
+    ';
+    
 }
 
 // сохраняем данные
@@ -159,11 +172,13 @@ function falanster_event_save($postId){
     $title= str_replace(' ','+',$_POST['title_event'] );
     $start_date = explode('/',$_POST['start_date'])  ;
     $end_date = explode('/',$_POST['end_date']);
+    $loacation =  str_replace(' ','+',$_POST['location_event'] );
+    $description =  str_replace(' ','+',$_POST['description_event'] );
     $link = '<a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text='.
     $title.'&dates='.$start_date[2].$start_date[1].$start_date[0].'T'.
     $_POST['start_time'].'/'.
     $end_date[2].$end_date[1].$end_date[0].'T'.
-    $_POST['end_time'].'&details&location&trp=false&sprop=website:http://localhost&ctz=Europe/Helsinki&sf=true&output=xml#eventpage_6"><img border="0" src="https://www.google.com/calendar/images/ext/gc_button1_ru.gif"></a>';
+    $_POST['end_time'].'&details='.$description.'&location='.$loacation.'&trp=false&sprop=website:http://localhost&ctz=Europe/Helsinki&sf=true&output=xml#eventpage_6"><img border="0" src="https://www.google.com/calendar/images/ext/gc_button1_ru.gif"></a>';
     // запись метаданных
     update_post_meta($postId, '_falanster_event',$link); 
     update_post_meta($postId, '_start_date',$_POST['start_date']);
@@ -171,6 +186,8 @@ function falanster_event_save($postId){
     update_post_meta($postId, '_start_time',$_POST['start_time']);
     update_post_meta($postId, '_end_time',$_POST['end_time']);
     update_post_meta($postId, '_title_event',$_POST['title_event']);
+    update_post_meta($postId, '_location_event',$_POST['location_event']);
+    update_post_meta($postId, '_description_event',$_POST['description_event']);
 }
 
 
