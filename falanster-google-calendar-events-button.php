@@ -16,6 +16,15 @@ Author URI: https://vk.com/id36220747
 add_action( 'admin_footer', 'script_falanster_input_calendar' );
 add_action('add_meta_boxes', 'falanster_events_create_page_post');
 add_action('save_post', 'falanster_event_save');
+add_filter( 'the_content', 'filter_function_get_google_event' );
+
+
+function filter_function_get_google_event( $content ) {
+	// Фильтр...
+  global $post;
+	return $content.get_post_meta($post->ID, '_falanster_event', true);
+}
+
 
  
 //function falanster_events_create_menu(){
