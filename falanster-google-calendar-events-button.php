@@ -155,13 +155,18 @@ function falanster_events_section($post,$box) {
     <p><strong>Описание:</strong><p>  
      
     <input type="text" placeholder="Описание" name="description_event" value="'.$old_description_event.'"/>
+    <br><br>
+    <input type="checkbox" name="delete_form" value="delete">Удалить мероприятие
+    
     ';
     
 }
 
 // сохраняем данные
 function falanster_event_save($postId){
-     
+    
+    
+   
     // пришло ли поле наших данных? 
      if (!isset($_POST['title_event'])&!($_POST['title_event'])=='') 
      return; 
@@ -177,6 +182,19 @@ function falanster_event_save($postId){
     // проверяем временное значение для безопасности
     //check_admin_referer('action_nonce_falanster_event','_nonce_falanster_event');   //какой-то баг и эта проверка не проходит
     //check_admin_referer( 'bcn_admin_options' ); 
+     // если нажата кнопка удалить мероприятие
+    if (isset($_POST['delete_form'])){
+         delete_post_meta($postId, '_falanster_event'); 
+         delete_post_meta($postId, '_start_date');
+         delete_post_meta($postId, '_end_date');
+         delete_post_meta($postId, '_start_time');
+         delete_post_meta($postId,'_end_time');
+         delete_post_meta($postId, '_title_event');
+         delete_post_meta($postId, '_location_event');
+         delete_post_meta($postId, '_description_event');
+       
+    }else{
+    
     
     $title= str_replace(' ','+',$_POST['title_event'] );
     $start_date = explode('/',$_POST['start_date'])  ;
@@ -196,7 +214,8 @@ function falanster_event_save($postId){
     update_post_meta($postId, '_end_time',$_POST['end_time']);
     update_post_meta($postId, '_title_event',$_POST['title_event']);
     update_post_meta($postId, '_location_event',$_POST['location_event']);
-    update_post_meta($postId, '_description_event',$_POST['description_event']);
+    update_post_meta($postId, '_description_event',$_POST['description_event']); 
+    }
 }
 
 
